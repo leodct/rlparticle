@@ -1,0 +1,4 @@
+# This is just for building the web demo, essentially just a raylib web static library,
+# imgui, rlimgui and emscripten. Didn't want to pollute the repo with unnecessary 
+# dependencies or 3rd party code so this folder will stay off of the repo.
+webbuild/

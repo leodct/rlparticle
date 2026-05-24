@@ -217,7 +217,7 @@ void DrawParticleConfigUI(ParticleConfig &cfg, const char *tag)
 
 
         SetClipboardText(config.c_str());
-        std::cout << "Particle config exported!\n ";
+        //std::cout << "Particle config exported!\n ";
     }
 
     ImGui::SetWindowFontScale(1);
