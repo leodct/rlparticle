@@ -145,7 +145,7 @@ void DrawParticleConfigUI(ParticleConfig &cfg, const char *tag)
 
     ImGui::Separator();
 
-    if (ImGui::Button("Export Particle Configuration", {ImGui::GetContentRegionAvail().x, 50})){
+    if (ImGui::Button("Copy to clipboard", {ImGui::GetContentRegionAvail().x, 50})){
         std::string config = "";
         config = config + 
         "{\n" +
