@@ -112,6 +112,16 @@ class ParticleSpawner {
      * @retval `particles.size()` - The amount of active particles that belong to this object.
      */
     int Count() const;
+
+    /**
+     * @brief Get a reference to the object's transform data.
+     */
+    Transform2D &GetTransform();
+
+    /**
+     * @brief Get a @b const reference to the object's transform data.
+     */
+    const Transform2D &GetTransform() const;
     
     private:
     class Particle {
