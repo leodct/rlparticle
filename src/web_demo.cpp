@@ -98,6 +98,7 @@ void EmscriptenMainLoop(){
         DrawFPS(10, 10);
         // Draw particle counter.
         DrawText((particle_count + std::to_string(particles->Count())).c_str(), 10, 40, 10, WHITE);
+        DrawText(TextFormat("Mouse coords: %d %d", GetMouseX(), GetMouseY()), 10, 60, 10, WHITE);
 
         // Draw particle editor.
         DrawParticleConfigUI(particles->GetConfig(), "particles");
@@ -109,6 +110,7 @@ void EmscriptenMainLoop(){
 
 int main(){
     SetConfigFlags(FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
+    emscripten_set_canvas_element_size("#canvas", 800, 800);
 
     InitWindow(800, 800, "rlparticle");
     SetWindowSize(800, 800);
