@@ -91,14 +91,10 @@ void EmscriptenMainLoop(){
         // Draw all particles.
         particles->Draw();
 
-        // Draw a small white circle where the cursor should be
-        DrawCircle(GetMouseX(), GetMouseY(), 5, WHITE);
-
         // Draw FPS counter.
         DrawFPS(10, 10);
         // Draw particle counter.
         DrawText((particle_count + std::to_string(particles->Count())).c_str(), 10, 40, 10, WHITE);
-        DrawText(TextFormat("Mouse coords: %d %d", GetMouseX(), GetMouseY()), 10, 60, 10, WHITE);
 
         // Draw particle editor.
         DrawParticleConfigUI(particles->GetConfig(), "particles");
@@ -110,14 +106,20 @@ void EmscriptenMainLoop(){
 
 int main(){
     SetConfigFlags(FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
-    emscripten_set_canvas_element_size("#canvas", 800, 800);
 
-    InitWindow(800, 800, "rlparticle");
-    SetWindowSize(800, 800);
+    int canvas_size = 800;
+
+    emscripten_set_canvas_element_size("#canvas", canvas_size, canvas_size);
+
+    InitWindow(canvas_size, canvas_size, "rlparticle");
+    SetWindowSize(canvas_size, canvas_size);
 
     particles = new ParticleSpawner(
     {
-        .position = {300, 400},
+        .position = {
+            GetScreenWidth()  / 2.0f,
+            GetScreenHeight() / 2.0f
+        },
         .rotation = 0,
         .scale = {1,1}
     },
