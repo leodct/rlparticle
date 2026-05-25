@@ -90,6 +90,10 @@ void EmscriptenMainLoop(){
 
         // Draw all particles.
         particles->Draw();
+
+        // Draw a small white circle where the cursor should be
+        DrawCircle(GetMouseX(), GetMouseY(), 5, WHITE);
+
         // Draw FPS counter.
         DrawFPS(10, 10);
         // Draw particle counter.
