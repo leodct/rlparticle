@@ -75,61 +75,39 @@ ParticleConfig cfg = {
         .variation = {0,0}
     }
 };
-
 ParticleSpawner *particles = nullptr;
-
 std::string particle_count = "Particles: ";
 
-void ResizeCanvas()
-{
-    double width;
-    double height;
 
-    emscripten_get_element_css_size(
-        "#canvas",
-        &width,
-        &height
-    );
+void EmscriptenMainLoop(){
+    particles->Update();
 
-    double dpr =
-        emscripten_get_device_pixel_ratio();
+    BeginDrawing();
+        ClearBackground(BLACK);
 
-    emscripten_set_canvas_element_size(
-        "#canvas",
-        width * dpr,
-        height * dpr
-    );
-}
+        // Start ImGui
+        rlImGuiBegin();
 
-void EmScriptenMainLoop(){
-    ResizeCanvas();
+        // Draw all particles.
+        particles->Draw();
+        // Draw FPS counter.
+        DrawFPS(10, 10);
+        // Draw particle counter.
+        DrawText((particle_count + std::to_string(particles->Count())).c_str(), 10, 40, 10, WHITE);
 
-            particles->Update();
+        // Draw particle editor.
+        DrawParticleConfigUI(particles->GetConfig(), "particles");
 
-        BeginDrawing();
-            ClearBackground(BLACK);
-
-            // Start ImGui
-            rlImGuiBegin();
-
-            // Draw all particles.
-            particles->Draw();
-            // Draw FPS counter.
-            DrawFPS(10, 10);
-            // Draw particle counter.
-            DrawText((particle_count + std::to_string(particles->Count())).c_str(), 10, 40, 10, WHITE);
-
-            // Draw particle editor.
-            DrawParticleConfigUI(particles->GetConfig(), "particles");
-
-            // Render ImGui
-            rlImGuiEnd();
-        EndDrawing();
+        // Render ImGui
+        rlImGuiEnd();
+    EndDrawing();
 }
 
 int main(){
-    SetWindowState(FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
+
     InitWindow(800, 800, "rlparticle");
+    SetWindowSize(800, 800);
 
     particles = new ParticleSpawner(
     {
@@ -144,7 +122,7 @@ int main(){
     // Setup ImGui
     rlImGuiSetup(true);
 
-    emscripten_set_main_loop(EmScriptenMainLoop, 0, 1);
+    emscripten_set_main_loop(EmscriptenMainLoop, 0, 1);
 
     // Shutdown ImGui. Never happens in web versions but it's still good practice to keep it here just in case.
     rlImGuiShutdown();

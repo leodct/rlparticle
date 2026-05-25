@@ -1,214 +1,104 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no"
+/>
 
 <title>Particle Demo</title>
 
 <style>
-:root {
-  --bg: #1b1b1b;
-  --panel: #222;
-  --border: #333;
-  --text: #888;
-}
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
 
-* {
-  box-sizing: border-box;
-}
+        background: #111;
+        color: #555555;
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  background: var(--bg);
-  font-family: Inter, system-ui, sans-serif;
-  overflow: hidden;
-}
+        font-family: sans-serif;
+    }
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    body {
+        display: flex;
+        flex-direction: column;
 
-#app {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 24px;
-}
+        justify-content: center;
+        align-items: center;
 
-#game-shell {
-  width: min(800px, 100vw - 48px);
-  height: min(800px, 100vw - 48px);
+        overflow: hidden;
+    }
 
-  background: var(--panel);
+    #header {
+        margin-top: 12px;
 
-  border: 1px solid var(--border);
-  border-radius: 14px;
+        font-size: 48px;
+        letter-spacing: 0.05em;
 
-  overflow: hidden;
+        color: #fff;
+    }
 
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.02);
+    #canvas-container {
+        width: 800px;
+        height: 800px;
 
-  position: relative;
-}
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: black;
-}
+        background: #1a1a1a;
 
-#loading {
-  position: absolute;
-  inset: 0;
+        border-radius: 12px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+        box-shadow:
+            0 0 30px rgba(0,0,0,0.5),
+            inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
 
-  color: white;
-  font-size: 14px;
-  letter-spacing: 0.04em;
+    canvas {
+        width: 800px;
+        height: 800px;
 
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(2px);
+        display: block;
 
-  z-index: 10;
-}
+        border-radius: 12px;
+    }
 
-#footer {
-  color: var(--text);
-  font-size: 12px;
-  opacity: 0.75;
-  user-select: none;
-}
+    #footer {
+        margin-top: 12px;
 
-#footer a {
-  color: inherit;
-  text-decoration: none;
-}
+        font-size: 12px;
+        letter-spacing: 0.05em;
 
-#footer a:hover {
-  opacity: 1;
-}
+        opacity: 0.6;
+    }
 </style>
 </head>
 
 <body>
 
-<div id="app">
-
-  <div id="game-shell">
-
-    <div id="loading">
-      Loading...
-    </div>
-
-    <canvas
-      id="canvas"
-      oncontextmenu="event.preventDefault()"
-      tabindex="-1">
-    </canvas>
-
-  </div>
-
-  <div id="footer">
-    powered by
-    <a href="https://emscripten.org/" target="_blank">
-      emscripten
-    </a>
-  </div>
-
+<div id="header">
+    rlParticle web demo
 </div>
 
-<script>
-const canvas = document.getElementById("canvas");
-const loading = document.getElementById("loading");
+<div id="canvas-container">
+    <canvas id="canvas"></canvas>
+    
+    <script>
+    var Module = {
+        canvas: document.getElementById("canvas")
+    };
+    </script>
+</div>
 
-function resizeCanvas() {
+<div id="footer">
+    Powered by Emscripten
+</div>
 
-  const rect =
-    canvas.getBoundingClientRect();
-
-  const dpr =
-    window.devicePixelRatio || 1;
-
-  const width =
-    Math.round(rect.width * dpr);
-
-  const height =
-    Math.round(rect.height * dpr);
-
-  if (
-    canvas.width !== width ||
-    canvas.height !== height
-  ) {
-    canvas.width = width;
-    canvas.height = height;
-  }
-}
-
-window.addEventListener(
-  "resize",
-  resizeCanvas
-);
-
-var Module = {
-
-  canvas,
-
-  print(...args) {
-    console.log(...args);
-  },
-
-  setStatus(text) {
-
-    console.log(text);
-
-    if (
-      text.includes("All downloads complete") ||
-      text === ""
-    ) {
-      loading.style.display = "none";
-    }
-  },
-
-  monitorRunDependencies(left) {
-
-    if (left === 0) {
-      loading.style.display = "none";
-    }
-  },
-
-  onRuntimeInitialized() {
-    resizeCanvas();
-  }
-};
-
-canvas.addEventListener(
-  "webglcontextlost",
-  (e) => {
-    e.preventDefault();
-    alert(
-      "WebGL context lost. Reload required."
-    );
-  },
-  false
-);
-</script>
-
-<script async src="index.js"></script>
+<script async type="text/javascript" src="index.js"></script>
 
 </body>
 </html>
