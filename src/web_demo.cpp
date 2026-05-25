@@ -78,8 +78,6 @@ ParticleConfig cfg = {
 ParticleSpawner *particles = nullptr;
 std::string particle_count = "Particles: ";
 
-bool check_click = false;
-float click_timer = 0;
 const float DBL_CLICK_THRESHOLD = 0.5;
 
 void EmscriptenMainLoop(){
@@ -100,26 +98,31 @@ void EmscriptenMainLoop(){
         DrawText((particle_count + std::to_string(particles->Count())).c_str(), 10, 40, 10, WHITE);
 
         // Detect if a double click happened. If so, move the settings window to that position.
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)  && !ImGui::GetIO().WantCaptureMouse){
-            if (check_click && click_timer <= DBL_CLICK_THRESHOLD){
-                ImGui::SetNextWindowPos({static_cast<float>(GetMouseX()), static_cast<float>(GetMouseY())}, ImGuiCond_Always, {0.75, 0.5});
-                check_click = false;
-                click_timer = 0;
-            }
-            else {
-                click_timer = 0;
-                check_click = true;
-            }
-        }
-        if (check_click)
+        static double last_click_time = 0.0;
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !ImGui::GetIO().WantCaptureMouse)
         {
-            click_timer += GetFrameTime();
-            if (click_timer > DBL_CLICK_THRESHOLD)
+            double now = GetTime();
+        
+            if ((now - last_click_time) <= DBL_CLICK_THRESHOLD)
             {
-                check_click = false;
-                click_timer = 0;
+                ImGui::SetNextWindowPos(
+                    {
+                        static_cast<float>(GetMouseX()),
+                        static_cast<float>(GetMouseY())
+                    },
+                    ImGuiCond_Always,
+                    {0.5f, 0.5f}
+                );
+            
+                last_click_time = 0.0;
+            }
+            else
+            {
+                last_click_time = now;
             }
         }
+
         // Draw particle editor.
         DrawParticleConfigUI(particles->GetConfig(), "particles");
 
