@@ -7,6 +7,7 @@
 #include <string>
 #include <rlImGui.h>
 #include <emscripten.h>
+#include <emscripten/html5.h>
 
 ParticleConfig cfg = {
     .acceleration = {
@@ -79,7 +80,30 @@ ParticleSpawner *particles = nullptr;
 
 std::string particle_count = "Particles: ";
 
+void ResizeCanvas()
+{
+    double width;
+    double height;
+
+    emscripten_get_element_css_size(
+        "#canvas",
+        &width,
+        &height
+    );
+
+    double dpr =
+        emscripten_get_device_pixel_ratio();
+
+    emscripten_set_canvas_element_size(
+        "#canvas",
+        width * dpr,
+        height * dpr
+    );
+}
+
 void EmScriptenMainLoop(){
+    ResizeCanvas();
+
             particles->Update();
 
         BeginDrawing();
@@ -104,11 +128,12 @@ void EmScriptenMainLoop(){
 }
 
 int main(){
-    InitWindow(800, 600, "rlparticle");
+    SetWindowState(FLAG_WINDOW_HIGHDPI | FLAG_WINDOW_RESIZABLE);
+    InitWindow(800, 800, "rlparticle");
 
     particles = new ParticleSpawner(
     {
-        .position = {400, 300},
+        .position = {300, 400},
         .rotation = 0,
         .scale = {1,1}
     },
