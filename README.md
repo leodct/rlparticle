@@ -31,7 +31,7 @@ A lightweight 2D particle simulation engine powered by [raylib](https://github.c
 
 ## Installation
 
-Clone the repository into your project (add --recursive if you don't have [raylib](#required) installed or just want to try out the demo):
+Clone the repository into your project (add --recursive if you don't have [raylib](https://github.com/raysan5/raylib) installed or just want to try out the demo):
 
 ```bash
 git clone git@github.com:leodct/rlparticle.git
@@ -57,7 +57,7 @@ Include the core particle system header:
 
 ### Particle Editor UI
 
-If your project uses [Dear ImGui](#optional) and you want access to the integrated editor:
+If your project uses [Dear ImGui](https://github.com/ocornut/imgui) and you want access to the integrated editor:
 
 ```cpp
 #include "particles_ui.hpp"
@@ -174,6 +174,6 @@ int main(){
 
 ## Acknowledgements
 
-- [raylib](https://github.com/raysan5/raylib)
+- [Raylib](https://github.com/raysan5/raylib)
 - [Dear ImGui](https://github.com/ocornut/imgui)
 - [Emscripten](https://github.com/emscripten-core/emscripten)
