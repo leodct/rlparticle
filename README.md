@@ -26,6 +26,8 @@ A lightweight 2D particle simulation engine powered by [raylib](https://github.c
 
 - [Dear ImGui](https://github.com/ocornut/imgui)  
   Required for the integrated particle editor UI.
+- [rlImGui](https://github.com/raylib-extras/rlimgui)
+  Required for Dear ImGui to work with raylib.
 
 ---
 
@@ -63,6 +65,7 @@ If your project uses [Dear ImGui](https://github.com/ocornut/imgui) and you want
 #include "particles_ui.hpp"
 ```
 Note that including `particles_ui.hpp` already includes the core particle system, so including `particles.hpp` afterwards is not needed.
+Also note that [rlImGui](https://github.com/raylib-extras/rlimgui) is necessary for the proper functioning of [Dear ImGui](https://github.com/ocornut/imgui).
 
 ---
 
@@ -176,4 +179,5 @@ int main(){
 
 - [Raylib](https://github.com/raysan5/raylib)
 - [Dear ImGui](https://github.com/ocornut/imgui)
+- [rlImGui](https://github.com/raylib-extras/rlimgui)
 - [Emscripten](https://github.com/emscripten-core/emscripten)
