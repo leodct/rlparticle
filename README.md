@@ -67,7 +67,7 @@ Note that including `particles_ui.hpp` already includes the core particle system
 ---
 
 ## Example
-You can build this exact example by running `make` in the project's root directory.
+You can build this exact example by running `make` in the project's root directory. Or by trying the [web demo](https://leodct.github.io/rlparticle)
 ```cpp
 #include <particles.hpp>
 #include <string>
