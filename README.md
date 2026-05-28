@@ -31,16 +31,16 @@ A lightweight 2D particle simulation engine powered by [raylib](https://github.c
 
 ## Installation
 
-Clone the repository into your project:
+Clone the repository into your project (add --recursive if you don't have [raylib](#required) installed or just want to try out the demo):
 
 ```bash
-git clone git@github.com:leodct/rlparticle
+git clone git@github.com:leodct/rlparticle.git
 ```
 
 Or add it as a submodule:
 
 ```bash
-git submodule add git@github.com:leodct/rlparticle
+git submodule add git@github.com:leodct/rlparticle.git
 ```
 
 ---
@@ -57,17 +57,17 @@ Include the core particle system header:
 
 ### Particle Editor UI
 
-If your project uses Dear ImGui and you want access to the integrated editor:
+If your project uses [Dear ImGui](#optional) and you want access to the integrated editor:
 
 ```cpp
 #include "particles_ui.hpp"
 ```
-Note that including `particles_ui.hpp` already includes the core particle system, so including `particles.hpp` afterward is not needed.
+Note that including `particles_ui.hpp` already includes the core particle system, so including `particles.hpp` afterwards is not needed.
 
 ---
 
 ## Example
-You can build this exact example by running `make` in the project's root directory. Or by trying the [web demo](https://leodct.github.io/rlparticle)
+You can build this exact example by running `make` in the project's root directory or by trying the [web demo](https://leodct.github.io/rlparticle).
 ```cpp
 #include <particles.hpp>
 #include <string>
@@ -176,3 +176,4 @@ int main(){
 
 - [raylib](https://github.com/raysan5/raylib)
 - [Dear ImGui](https://github.com/ocornut/imgui)
+- [Emscripten](https://github.com/emscripten-core/emscripten)
